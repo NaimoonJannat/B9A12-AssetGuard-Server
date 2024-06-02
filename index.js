@@ -54,6 +54,30 @@ const client = new MongoClient(uri, {
         res.send(result);
       })
 
+    // to update cards 
+    app.get('/assets/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) }
+        const result = await assetCollection.findOne(query);
+        res.send(result);
+      })
+  
+      app.put('/assets/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) }
+        const options = { upsert: true };
+        const updatedAsset = req.body;
+        const asset = {
+          $set: {
+            product: updatedAsset.product,
+            quantity: updatedAsset.quantity,
+            type: updatedAsset.type,
+          }
+        }
+        const result = await assetCollection.updateOne(filter, asset);
+        res.send(result);
+      })
+
 
         // Send a ping to confirm a successful connection
       await client.db("admin").command({ ping: 1 });
