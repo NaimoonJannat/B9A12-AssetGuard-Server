@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
     //   await client.connect();
 
      const database = client.db('assetGuardDb');
-     const assignmentCollection = database.collection("assetCollection");
+     const assetCollection = database.collection("assetCollection");
 
        // to send assets backend 
     app.post('/assets', async (req, res) => {
