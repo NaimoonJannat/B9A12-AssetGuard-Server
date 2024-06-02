@@ -30,6 +30,54 @@ const client = new MongoClient(uri, {
 
      const database = client.db('assetGuardDb');
      const assetCollection = database.collection("assetCollection");
+     const hrCollection = database.collection("hrCollection");
+     const employeeCollection = database.collection("employeeCollection");
+     const usersCollection = database.collection("usersCollection");
+
+        // to send users backend 
+    app.post('/users', async (req, res) => {
+      const newUser = req.body;
+      console.log(newUser);
+      const result = await usersCollection.insertOne(newUser);
+      res.send(result);
+    })
+
+   
+  app.get('/users', async (req, res) => {
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+        // to send hrs backend 
+    app.post('/hrs', async (req, res) => {
+      const newHR = req.body;
+      console.log(newHR);
+      const result = await hrCollection.insertOne(newHR);
+      res.send(result);
+    })
+
+   
+  app.get('/hrs', async (req, res) => {
+      const cursor = hrCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+        // to send employees backend 
+    app.post('/employees', async (req, res) => {
+      const newEmployee = req.body;
+      console.log(newEmployee);
+      const result = await employeeCollection.insertOne(newEmployee);
+      res.send(result);
+    })
+
+   
+  app.get('/employees', async (req, res) => {
+      const cursor = employeeCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
        // to send assets backend 
     app.post('/assets', async (req, res) => {
