@@ -58,7 +58,21 @@ const client = new MongoClient(uri, {
       res.send(result);
     })
 
+     //  to delete employees data from team after removing it
+     app.delete('/teams/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await teamCollection.deleteOne(query);
+      res.send(result);
+    })
 
+    // to add employees data to employeeCollection after removing them 
+  app.post('/employees', async (req, res) => {
+    const newMember = req.body;
+    console.log(newMember);
+    const result = await employeeCollection.insertOne(newMember);
+    res.send(result);
+  })
 
         // to send users backend 
     app.post('/users', async (req, res) => {
