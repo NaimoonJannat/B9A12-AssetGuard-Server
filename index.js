@@ -33,6 +33,32 @@ const client = new MongoClient(uri, {
      const hrCollection = database.collection("hrCollection");
      const employeeCollection = database.collection("employeeCollection");
      const usersCollection = database.collection("usersCollection");
+     const teamCollection = database.collection("teamCollection");
+
+    //  to delete employees data after team selection 
+       app.delete('/employees/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) }
+        const result = await employeeCollection.deleteOne(query);
+        res.send(result);
+      })
+
+      // to add employees data to teamCollection after adding them 
+    app.post('/teams', async (req, res) => {
+      const newMember = req.body;
+      console.log(newMember);
+      const result = await teamCollection.insertOne(newMember);
+      res.send(result);
+    })
+
+   
+  app.get('/teams', async (req, res) => {
+      const cursor = teamCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+
 
         // to send users backend 
     app.post('/users', async (req, res) => {
