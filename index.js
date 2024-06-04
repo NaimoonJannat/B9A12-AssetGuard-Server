@@ -54,6 +54,13 @@ const client = new MongoClient(uri, {
       res.send(result);
     })
 
+    // delete data from requests 
+    app.delete('/requests/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await requestedCollection.deleteOne(query);
+      res.send(result);
+    })
 
     //  to delete employees data after team selection 
        app.delete('/employees/:id', async (req, res) => {
