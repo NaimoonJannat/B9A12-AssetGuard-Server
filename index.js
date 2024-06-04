@@ -36,7 +36,6 @@ const client = new MongoClient(uri, {
      const usersCollection = database.collection("usersCollection");
      const teamCollection = database.collection("teamCollection");
      const requestedCollection = database.collection("requestedCollection");
-     const approvedCollection = database.collection("approvedCollection");
 
 
            // to send requested Assets backend 
