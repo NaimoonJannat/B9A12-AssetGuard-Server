@@ -29,11 +29,30 @@ const client = new MongoClient(uri, {
     //   await client.connect();
 
      const database = client.db('assetGuardDb');
+
      const assetCollection = database.collection("assetCollection");
      const hrCollection = database.collection("hrCollection");
      const employeeCollection = database.collection("employeeCollection");
      const usersCollection = database.collection("usersCollection");
      const teamCollection = database.collection("teamCollection");
+     const requestedCollection = database.collection("requestedCollection");
+
+
+           // to send requested Assets backend 
+    app.post('/requests', async (req, res) => {
+      const newRequest = req.body;
+      console.log(newRequest);
+      const result = await requestedCollection.insertOne(newRequest);
+      res.send(result);
+    })
+
+   
+  app.get('/requests', async (req, res) => {
+      const cursor = requestedCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
 
     //  to delete employees data after team selection 
        app.delete('/employees/:id', async (req, res) => {
